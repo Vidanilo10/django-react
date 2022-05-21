@@ -1,15 +1,39 @@
-var axios = require('axios');
+const url = process.env.URL
 
-var config = {
-    method: 'get',
-    url: 'http://localhost:8000/API/v1/users/',
-    headers: { }
-};
+const connection = (endpoint, data, method='GET', headers={}, body={}) => {
 
-axios(config)
-.then(function (response) {
-    console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-    console.log(error);
-});
+    const axios = require('axios');
+
+    if (method==='GET'){
+        const config = {
+            method: method,
+            url: url + endpoint
+        }
+
+        const response = axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+        })
+
+        return response
+
+    }else{
+        const config = {
+            method: method,
+            url: url + endpoint,
+            headers: headers,
+            body: body,
+        };
+        const response = axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+        })
+    }
+}
+
